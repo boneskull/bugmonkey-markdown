@@ -40,6 +40,10 @@ BugMonkey Markdown leverages [Showdown](https://github.com/coreyti/showdown), [h
 
 Standard "contrib" tools from [Grunt](http://gruntjs.org), plus [grunt-filetransform](https://github.com/dfernandez79/grunt-filetransform) to glue the pieces together into the FogBugz customization format.
 
+## License
+
+MIT
+
 ## Author
 [Christopher Hiller](http://boneskull.github.io)
 
