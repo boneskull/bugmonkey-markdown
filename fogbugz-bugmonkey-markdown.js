@@ -152,6 +152,7 @@
           $sFormat.remove();
           console.info('BugMonkey Markdown: destroyed editor');
           bound = false;
+          highlight();
         },
 
         textareaMutationHandler = function textareaMutationHandler(mutation) {
@@ -265,6 +266,12 @@
         type: 'text/css',
         href: href
       }).appendTo('head');
+    },
+
+    highlight = function highlight() {
+      $('pre code').each(function () {
+        hljs.highlightBlock(this);
+      });
     };
 
   // gather CSS
@@ -273,11 +280,7 @@
   // we need codemirror.js first, and then secondary scripts, in any order.
   $.getScript(HLJS_URL)
     .then(function () {
-      $(function () {
-        $('pre code').each(function () {
-          hljs.highlightBlock(this);
-        });
-      });
+      $(highlight);
     });
   $.getScript(CODEMIRROR_SCRIPT)
     .then(function getAllScripts() {
