@@ -6,7 +6,7 @@ BugMonkey customization for FogBugz which allows for Markdown in editor.
 
 ## Prerequisites
 
-BugMonkey Markdown (as of v1.0.3) works in any browser that supports the [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).  That means no IE older than IE11.  I'll get on that...
+BugMonkey Markdown (as of v1.0.3) works in [any browser](http://caniuse.com/mutationobserver) that supports the [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).  That means no IE older than IE11.  I'll get on that...
 
 ## Installation
 
