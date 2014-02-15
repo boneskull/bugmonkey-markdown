@@ -11,7 +11,13 @@ module.exports = function (grunt) {
     uglify: {
       main: {
         files: {
-          'build/fogbugz-bugmonkey-markdown.min.js': ['<%= pkg.main %>']
+          'build/fogbugz-bugmonkey-markdown.min.js': ['<%= pkg.main %>'],
+          'build/showdown.min.js': [
+            'bower_components/showdown/src/showdown.js'
+          ],
+          'build/prettify.min.js': [
+            'bower_components/showdown/src/extensions/prettify.js'
+          ]
         }
       }
     },
@@ -61,12 +67,12 @@ module.exports = function (grunt) {
         src: [
           'header.txt',
           'bower_components/jquery.preempt/jquery.preempt.min.js',
-          'bower_components/showdown/compressed/showdown.js',
+          'build/showdown.min.js',
           'bower_components/highlightjs/highlight.pack.js',
           'build/fogbugz-bugmonkey-markdown.min.js',
           // this must be loaded after our main script because we have to
           // stuff Showdown into the window object.
-          'bower_components/showdown/compressed/extensions/prettify.js',
+          'build/prettify.min.js',
           'build/fogbugz-bugmonkey-markdown.min.css',
           'build/github.min.css'
         ]
