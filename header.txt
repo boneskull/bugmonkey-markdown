@@ -1,4 +1,4 @@
 name:          BugMonkey Markdown
 description:   Markdown for FogBugz Editor
 author:        Christopher Hiller <chiller@badwing.com>
-version:       1.0.3
+version:       1.0.4

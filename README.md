@@ -6,7 +6,7 @@ BugMonkey customization for FogBugz which allows for Markdown in editor.
 
 ## Prerequisites
 
-BugMonkey Markdown (as of v1.0.3) works in [any browser](http://caniuse.com/mutationobserver) that supports the [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).  That means no IE older than IE11.  I'll get on that...
+BugMonkey Markdown (as of v1.0.4) works in [any browser](http://caniuse.com/mutationobserver) that supports the [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).  That means no IE older than IE11.  I'll get on that...
 
 ## Installation
 
@@ -20,6 +20,8 @@ Paste `dist/bugmonkey-markdown.txt` into the editor instead.
 
 ## Development
 
+You might want to do this if you hate the CSS I picked, or want some other fancy CodeMirror feature.
+
 1.  Execute `npm install`
 2.  Execute `bower install`
 3.  Make edits to any/all of the following:
@@ -32,7 +34,7 @@ Paste `dist/bugmonkey-markdown.txt` into the editor instead.
 
 ### Dependencies
 
-BugMonkey Markdown leverages [Showdown](https://github.com/coreyti/showdown), [highlight.js](http://highlightjs.org/) and [jquery.preempt](http://boneskull.github.io/jquery.preempt) to do its dirty work.
+BugMonkey Markdown leverages [Showdown](https://github.com/coreyti/showdown), [highlight.js](http://highlightjs.org/), [CodeMirror](http://codemirror.net/) and [jquery.preempt](http://boneskull.github.io/jquery.preempt) to do its dirty work.
 
 ### Dev Dependencies
 

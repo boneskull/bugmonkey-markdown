@@ -68,13 +68,11 @@ module.exports = function (grunt) {
           'header.txt',
           'bower_components/jquery.preempt/jquery.preempt.min.js',
           'build/showdown.min.js',
-          'bower_components/highlightjs/highlight.pack.js',
           'build/fogbugz-bugmonkey-markdown.min.js',
           // this must be loaded after our main script because we have to
           // stuff Showdown into the window object.
           'build/prettify.min.js',
-          'build/fogbugz-bugmonkey-markdown.min.css',
-          'build/github.min.css'
+          'build/fogbugz-bugmonkey-markdown.min.css'
         ]
       },
       development: {
@@ -83,11 +81,9 @@ module.exports = function (grunt) {
           'header.txt',
           'bower_components/jquery.preempt/jquery.preempt.js',
           'bower_components/showdown/src/showdown.js',
-          'bower_components/highlightjs/highlight.pack.js',
           'fogbugz-bugmonkey-markdown.js',
           'bower_components/showdown/src/extensions/prettify.js',
-          'fogbugz-bugmonkey-markdown.css',
-          'bower_components/highlightjs/styles/github.css'
+          'fogbugz-bugmonkey-markdown.css'
         ]
       }
     },
@@ -96,13 +92,6 @@ module.exports = function (grunt) {
         files: {
           'build/fogbugz-bugmonkey-markdown.min.css': [
             'fogbugz-bugmonkey-markdown.css'
-          ]
-        }
-      },
-      highlight: {
-        files: {
-          'build/github.min.css': [
-            'bower_components/highlightjs/styles/github.css'
           ]
         }
       }

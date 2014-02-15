@@ -9,9 +9,6 @@
 (function (jQuery, window) {
   'use strict';
 
-  // init highlighting
-  hljs.initHighlightingOnLoad();
-
   // we need this to use the prettify extension
   window.Showdown = Showdown;
 
@@ -40,6 +37,10 @@
       CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js'
     ],
 
+    HLJS_URL_BASE = '//yandex.st/highlightjs/8.0',
+
+    HLJS_URL = HLJS_URL_BASE + '/highlight.min.js',
+
     /**
      * @description List of CSS urls
      * @type {string[]}
@@ -49,7 +50,9 @@
       CODEMIRROR_URL_BASE + '/theme/xq-light.min.css',
 
       // default codemirror css (necessary?)
-      CODEMIRROR_URL_BASE + '/codemirror.min.css'
+      CODEMIRROR_URL_BASE + '/codemirror.min.css',
+
+      HLJS_URL_BASE + '/styles/atelier-forest.light.min.css'
     ],
 
     NAMESPACE = 'BugMonkey.Markdown',
@@ -268,6 +271,14 @@
   CSS.forEach(getCSS);
 
   // we need codemirror.js first, and then secondary scripts, in any order.
+  $.getScript(HLJS_URL)
+    .then(function () {
+      $(function () {
+        $('pre code').each(function () {
+          hljs.highlightBlock(this);
+        });
+      });
+    });
   $.getScript(CODEMIRROR_SCRIPT)
     .then(function getAllScripts() {
       return $.when.apply($, SCRIPTS.map(function getAScript(script) {

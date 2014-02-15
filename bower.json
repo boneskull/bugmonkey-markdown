@@ -22,7 +22,6 @@
   ],
   "dependencies": {
     "showdown": "~0.3.1",
-    "highlightjs": "~8.0.0",
     "jquery.preempt": "~0.3.2"
   },
   "private": true
