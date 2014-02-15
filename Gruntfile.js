@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         }
       },
       production: {
-        dest: 'dest/bugmonkey-markdown.min.txt',
+        dest: 'dist/bugmonkey-markdown.min.txt',
         src: [
           'header.txt',
           'bower_components/jquery.preempt/jquery.preempt.min.js',
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        dest: 'dest/bugmonkey-markdown.txt',
+        dest: 'dist/bugmonkey-markdown.txt',
         src: [
           'header.txt',
           'bower_components/jquery.preempt/jquery.preempt.js',
