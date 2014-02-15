@@ -3,7 +3,7 @@
   "main": "fogbugz-bugmonkey-markdown.js",
   "private": true,
   "description": "BugMonkey customization for FogBugz which allows for Markdown in editor.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "git://github.com/boneskull/fb-bugmonkey-markdown.git",
   "devDependencies": {
     "grunt": "~0.4.2",
@@ -11,6 +11,7 @@
     "grunt-filetransform": "~0.1.1",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-release": "~0.6.0",
-    "grunt-contrib-cssmin": "~0.7.0"
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-bump": "0.0.13"
   }
 }

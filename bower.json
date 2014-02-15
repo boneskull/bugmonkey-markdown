@@ -1,7 +1,7 @@
 {
   "name": "fogbugz-bugmonkey-markdown",
   "main": "fogbugz-bugmonkey-markdown.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/boneskull/fb-bugmonkey-markdown",
   "authors": [
     "Christopher Hiller <chiller@badwing.com>"

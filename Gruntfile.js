@@ -100,6 +100,21 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+
+    bump: {
+      options: {
+        files: ['package.json', 'bower.json'],
+        updateConfigs: ['pkg'],
+        commit: true,
+        commitMessage: 'Release v%VERSION%',
+        commitFiles: ['-a'], // '-a' for all files
+        createTag: true,
+        tagName: 'v%VERSION%',
+        tagMessage: 'Version %VERSION%',
+        push: true,
+        pushTo: 'origin'
+      }
     }
   });
 
@@ -108,6 +123,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-filetransform');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-bump');
 
 // Default task.
   grunt.registerTask('default', ['uglify', 'cssmin', 'filetransform']);
