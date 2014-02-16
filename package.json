@@ -4,6 +4,7 @@
   "private": true,
   "description": "BugMonkey customization for FogBugz which allows for Markdown in editor.",
   "version": "1.1.0",
+  "homepage": "http://boneskull.github.io/fb-bugmonkey-markdown",
   "repository": "git://github.com/boneskull/fb-bugmonkey-markdown.git",
   "devDependencies": {
     "grunt": "~0.4.2",
