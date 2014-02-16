@@ -1,7 +1,7 @@
 name:          BugMonkey Markdown
 description:   Markdown for FogBugz Editor
 author:        Christopher Hiller <chiller@badwing.com>
-version:       1.0.5
+version:       1.0.6
 
 
 js:
@@ -1696,9 +1696,6 @@ if (typeof define === 'function' && define.amd) {
 (function (jQuery, window) {
   'use strict';
 
-  // we need this to use the prettify extension
-  window.Showdown = Showdown;
-
   var CODEMIRROR_URL_BASE = '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.21.0/',
 
     /**
@@ -1724,23 +1721,13 @@ if (typeof define === 'function' && define.amd) {
       CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js'
     ],
 
-    HLJS_URL_BASE = '//yandex.st/highlightjs/8.0',
+  // default codemirror css (necessary?)
+    CODEMIRROR_CSS = CODEMIRROR_URL_BASE + '/codemirror.min.css',
 
-    HLJS_URL = HLJS_URL_BASE + '/highlight.min.js',
-
-    /**
-     * @description List of CSS urls
-     * @type {string[]}
-     */
-      CSS = [
-      // xq-light codemirror theme
+  // xq-light codemirror theme
+    DEFAULT_CODEMIRROR_THEME =
       CODEMIRROR_URL_BASE + '/theme/xq-light.min.css',
 
-      // default codemirror css (necessary?)
-      CODEMIRROR_URL_BASE + '/codemirror.min.css',
-
-      HLJS_URL_BASE + '/styles/atelier-forest.light.min.css'
-    ],
 
     NAMESPACE = 'BugMonkey.Markdown',
 
@@ -1779,6 +1766,8 @@ if (typeof define === 'function' && define.amd) {
     $sFormat = $('<input name="sEvent_sFormat" type="hidden" value="html"/>'),
 
     textareaObserver,
+
+    storedTheme,
 
     /**
      * @description When the page is ready, this function is run.  Initializes a token if appropriate, and watches the DOM for the "plain text" link/btn
@@ -1839,7 +1828,6 @@ if (typeof define === 'function' && define.amd) {
           $sFormat.remove();
           console.info('BugMonkey Markdown: destroyed editor');
           bound = false;
-          highlight();
         },
 
         textareaMutationHandler = function textareaMutationHandler(mutation) {
@@ -1911,7 +1899,7 @@ if (typeof define === 'function' && define.amd) {
           contents = $textarea.val();
 
           $textarea.val(new Showdown.converter({extensions: [
-            'prettify'
+            'fogbugz'
           ]}).makeHtml(contents));
         };
 
@@ -1953,22 +1941,21 @@ if (typeof define === 'function' && define.amd) {
         type: 'text/css',
         href: href
       }).appendTo('head');
-    },
-
-    highlight = function highlight() {
-      $('pre code').each(function () {
-        hljs.highlightBlock(this);
-      });
     };
 
   // gather CSS
-  CSS.forEach(getCSS);
+  getCSS(CODEMIRROR_CSS);
+  storedTheme = localStorage[NAMESPACE + '_THEME'];
+  if (storedTheme) {
+    getCSS(storedTheme);
+  } else {
+    localStorage[NAMESPACE + '_THEME'] = DEFAULT_CODEMIRROR_THEME;
+    getCSS(DEFAULT_CODEMIRROR_THEME);
+  }
+
+  window.Showdown = Showdown;
 
   // we need codemirror.js first, and then secondary scripts, in any order.
-  $.getScript(HLJS_URL)
-    .then(function () {
-      $(highlight);
-    });
   $.getScript(CODEMIRROR_SCRIPT)
     .then(function getAllScripts() {
       return $.when.apply($, SCRIPTS.map(function getAScript(script) {
@@ -1989,32 +1976,39 @@ if (typeof define === 'function' && define.amd) {
 
 })(jQuery, window);
 
-//
-//  Google Prettify
-//  A showdown extension to add Google Prettify (http://code.google.com/p/google-code-prettify/)
-//  hints to showdown's HTML output.
-//
+/**
+ * Converts Markdown-generated code blocks to blocks for FogBugz/Kiln which
+ * are then auto-highlighted by FogBugz upon display.
+ */
 
-(function(){
+(function () {
+  'use strict';
 
-    var prettify = function(converter) {
-        return [
-            { type: 'output', filter: function(source){
-                return source.replace(/(<pre>)?<code>/gi, function(match, pre) {
-                    if (pre) {
-                        return '<pre class="prettyprint linenums" tabIndex="0"><code data-inner="1">';
-                    } else {
-                        return '<code class="prettyprint">';
-                    }
-                });
-            }}
-        ];
-    };
+  var fogbugz = function () {
+    return [
+      {
+        type: 'output',
+        filter: function (source) {
+          return source.replace(/<pre><code.*?>([\s\S]+)<\/code><\/pre>/gi,
+            function (match, code) {
+              return '<p>\n&lt;code&gt;</p>\n' + code.split('\n').map(function (line) {
+                return '<div>' + line.replace(/\s\s/g, '&nbsp; ') + '</div>';
+              }).join('\n') + '<div>\n&lt;/code&gt;</div>';
+            });
+        }
+      }
+    ];
+  };
 
-    // Client-side export
-    if (typeof window !== 'undefined' && window.Showdown && window.Showdown.extensions) { window.Showdown.extensions.prettify = prettify; }
-    // Server-side export
-    if (typeof module !== 'undefined') module.exports = prettify;
+  // Client-side export
+  if (typeof window !== 'undefined' && window.Showdown &&
+    window.Showdown.extensions) {
+    window.Showdown.extensions.fogbugz = fogbugz;
+  }
+  // Server-side export
+  if (typeof module !== 'undefined') {
+    module.exports = fogbugz;
+  }
 
 }());
 

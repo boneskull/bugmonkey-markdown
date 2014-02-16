@@ -2,8 +2,6 @@
 
 BugMonkey customization for FogBugz which allows for Markdown in editor.
 
-*BONUS:* Syntax highlighting in cases for events edited with this customization.
-
 ## Prerequisites
 
 BugMonkey Markdown currently works in [any browser](http://caniuse.com/mutationobserver) that supports the [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).  That means no IE older than IE11.  I'll get on that...
@@ -34,7 +32,7 @@ You might want to do this if you hate the CSS I picked, or want some other fancy
 
 ### Dependencies
 
-BugMonkey Markdown leverages [Showdown](https://github.com/coreyti/showdown), [highlight.js](http://highlightjs.org/), [CodeMirror](http://codemirror.net/) and [jquery.preempt](http://boneskull.github.io/jquery.preempt) to do its dirty work.
+BugMonkey Markdown leverages [Showdown](https://github.com/coreyti/showdown), [CodeMirror](http://codemirror.net/) and [jquery.preempt](http://boneskull.github.io/jquery.preempt) to do its dirty work.
 
 ### Dev Dependencies
 

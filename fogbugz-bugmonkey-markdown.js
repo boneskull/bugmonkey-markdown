@@ -9,9 +9,6 @@
 (function (jQuery, window) {
   'use strict';
 
-  // we need this to use the prettify extension
-  window.Showdown = Showdown;
-
   var CODEMIRROR_URL_BASE = '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.21.0/',
 
     /**
@@ -37,23 +34,13 @@
       CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js'
     ],
 
-    HLJS_URL_BASE = '//yandex.st/highlightjs/8.0',
+  // default codemirror css (necessary?)
+    CODEMIRROR_CSS = CODEMIRROR_URL_BASE + '/codemirror.min.css',
 
-    HLJS_URL = HLJS_URL_BASE + '/highlight.min.js',
-
-    /**
-     * @description List of CSS urls
-     * @type {string[]}
-     */
-      CSS = [
-      // xq-light codemirror theme
+  // xq-light codemirror theme
+    DEFAULT_CODEMIRROR_THEME =
       CODEMIRROR_URL_BASE + '/theme/xq-light.min.css',
 
-      // default codemirror css (necessary?)
-      CODEMIRROR_URL_BASE + '/codemirror.min.css',
-
-      HLJS_URL_BASE + '/styles/atelier-forest.light.min.css'
-    ],
 
     NAMESPACE = 'BugMonkey.Markdown',
 
@@ -92,6 +79,8 @@
     $sFormat = $('<input name="sEvent_sFormat" type="hidden" value="html"/>'),
 
     textareaObserver,
+
+    storedTheme,
 
     /**
      * @description When the page is ready, this function is run.  Initializes a token if appropriate, and watches the DOM for the "plain text" link/btn
@@ -152,7 +141,6 @@
           $sFormat.remove();
           console.info('BugMonkey Markdown: destroyed editor');
           bound = false;
-          highlight();
         },
 
         textareaMutationHandler = function textareaMutationHandler(mutation) {
@@ -224,7 +212,7 @@
           contents = $textarea.val();
 
           $textarea.val(new Showdown.converter({extensions: [
-            'prettify'
+            'fogbugz'
           ]}).makeHtml(contents));
         };
 
@@ -266,22 +254,21 @@
         type: 'text/css',
         href: href
       }).appendTo('head');
-    },
-
-    highlight = function highlight() {
-      $('pre code').each(function () {
-        hljs.highlightBlock(this);
-      });
     };
 
   // gather CSS
-  CSS.forEach(getCSS);
+  getCSS(CODEMIRROR_CSS);
+  storedTheme = localStorage[NAMESPACE + '_THEME'];
+  if (storedTheme) {
+    getCSS(storedTheme);
+  } else {
+    localStorage[NAMESPACE + '_THEME'] = DEFAULT_CODEMIRROR_THEME;
+    getCSS(DEFAULT_CODEMIRROR_THEME);
+  }
+
+  window.Showdown = Showdown;
 
   // we need codemirror.js first, and then secondary scripts, in any order.
-  $.getScript(HLJS_URL)
-    .then(function () {
-      $(highlight);
-    });
   $.getScript(CODEMIRROR_SCRIPT)
     .then(function getAllScripts() {
       return $.when.apply($, SCRIPTS.map(function getAScript(script) {

@@ -15,8 +15,8 @@ module.exports = function (grunt) {
           'build/showdown.min.js': [
             'bower_components/showdown/src/showdown.js'
           ],
-          'build/prettify.min.js': [
-            'bower_components/showdown/src/extensions/prettify.js'
+          'build/fogbugz-showdown.min.js': [
+            'fogbugz-showdown.js'
           ]
         }
       }
@@ -28,6 +28,7 @@ module.exports = function (grunt) {
       all: {
         files: [
           '<%=pkg.main%>', 'fogbugz-bugmonkey-markdown.css', 'Gruntfile.js',
+          'fogbugz-showdown.js',
           'header.txt', 'bower_components/**/*'
         ],
         tasks: ['default']
@@ -71,7 +72,7 @@ module.exports = function (grunt) {
           'build/fogbugz-bugmonkey-markdown.min.js',
           // this must be loaded after our main script because we have to
           // stuff Showdown into the window object.
-          'build/prettify.min.js',
+          'build/fogbugz-showdown.min.js',
           'build/fogbugz-bugmonkey-markdown.min.css'
         ]
       },
@@ -82,7 +83,7 @@ module.exports = function (grunt) {
           'bower_components/jquery.preempt/jquery.preempt.js',
           'bower_components/showdown/src/showdown.js',
           'fogbugz-bugmonkey-markdown.js',
-          'bower_components/showdown/src/extensions/prettify.js',
+          'fogbugz-showdown.js',
           'fogbugz-bugmonkey-markdown.css'
         ]
       }
