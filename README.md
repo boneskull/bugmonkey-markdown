@@ -1,16 +1,24 @@
 # BugMonkey Markdown
 
-BugMonkey customization for FogBugz which allows for Markdown in editor.
-
-## Prerequisites
-
-BugMonkey Markdown currently works in [any browser](http://caniuse.com/mutationobserver) that supports the [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).  That means no IE older than IE11.  I'll get on that...
+[BugMonkey](https://help.fogcreek.com/7585/customizing-your-fogbugz-site-with-bugmonkey) customization for FogBugz which allows for [Markdown](https://daringfireball.net/projects/markdown/) in case editor.
 
 ## Installation
 
 1.  Create a new Customization in FogBugz.
 2.  Paste the contents of `dist/bugmonkey-markdown.min.txt` into the customizations editor.
-3.  Save, refresh, and you should be ready to go.
+3.  Enable the Customization for yourself.
+4.  Save, refresh, and you should be ready to go.
+
+## Usage
+
+Here's an example of altering the CodeMirror CSS:
+
+```js
+localStorage['BugMonkey.Markdown.THEME_URL'] = '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.21.0/theme/solarized.min.css';
+localStorage['BugMonkey.Markdown.THEME_NAME'] = 'solarized';
+```
+
+Now, next time you refresh, you will use this custom theme.
 
 ## Debugging
 
@@ -34,13 +42,15 @@ You might want to do this if you hate the CSS I picked, or want some other fancy
 
 BugMonkey Markdown leverages [Showdown](https://github.com/coreyti/showdown), [CodeMirror](http://codemirror.net/) and [jquery.preempt](http://boneskull.github.io/jquery.preempt) to do its dirty work.
 
+IE9 and IE10 support courtesy [Mutation Observers Polyfill](https://github.com/Polymer/MutationObservers).
+
 ### Dev Dependencies
 
 Standard "contrib" tools from [Grunt](http://gruntjs.org), plus [grunt-filetransform](https://github.com/dfernandez79/grunt-filetransform) to glue the pieces together into the FogBugz customization format.
 
 ## License
 
-MIT
+MIT, with portions Copyright (c) 2012 The Polymer Authors. All rights reserved.
 
 ## Author
 [Christopher Hiller](http://boneskull.github.io)

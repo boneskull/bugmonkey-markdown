@@ -11,6 +11,7 @@ module.exports = function (grunt) {
     uglify: {
       main: {
         files: {
+          'build/MutationObserver.min.js': ['MutationObserver.js'],
           'build/fogbugz-bugmonkey-markdown.min.js': ['<%= pkg.main %>'],
           'build/showdown.min.js': [
             'bower_components/showdown/src/showdown.js'
@@ -28,7 +29,7 @@ module.exports = function (grunt) {
       all: {
         files: [
           '<%=pkg.main%>', 'fogbugz-bugmonkey-markdown.css', 'Gruntfile.js',
-          'fogbugz-showdown.js',
+          'fogbugz-showdown.js', 'MutationObserver.js',
           'header.txt', 'bower_components/**/*'
         ],
         tasks: ['default']
@@ -67,6 +68,7 @@ module.exports = function (grunt) {
         dest: 'dist/bugmonkey-markdown.min.txt',
         src: [
           'header.txt',
+          'build/MutationObserver.min.js',
           'bower_components/jquery.preempt/jquery.preempt.min.js',
           'build/showdown.min.js',
           'build/fogbugz-bugmonkey-markdown.min.js',
@@ -80,6 +82,7 @@ module.exports = function (grunt) {
         dest: 'dist/bugmonkey-markdown.txt',
         src: [
           'header.txt',
+          'MutationObserver.js',
           'bower_components/jquery.preempt/jquery.preempt.js',
           'bower_components/showdown/src/showdown.js',
           'fogbugz-bugmonkey-markdown.js',

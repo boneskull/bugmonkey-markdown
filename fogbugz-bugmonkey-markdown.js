@@ -1,4 +1,4 @@
-/*global Showdown, hljs*/
+/*global Showdown*/
 
 /**
  * BugMonkey Markdown (FogBugz Customization)
@@ -34,13 +34,8 @@
       CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js'
     ],
 
-  // default codemirror css (necessary?)
+  // default codemirror css
     CODEMIRROR_CSS = CODEMIRROR_URL_BASE + '/codemirror.min.css',
-
-  // xq-light codemirror theme
-    DEFAULT_CODEMIRROR_THEME =
-      CODEMIRROR_URL_BASE + '/theme/xq-light.min.css',
-
 
     NAMESPACE = 'BugMonkey.Markdown',
 
@@ -104,6 +99,7 @@
           cm_editor = window.CodeMirror.fromTextArea($textarea[0], {
             mode: 'gfm', // Github Flavored Markdown
             lineWrapping: true,
+            theme: localStorage[NAMESPACE + '.THEME_NAME'] || 'default',
             tabindex: $textarea.attr('tabindex')
           });
 
@@ -258,12 +254,9 @@
 
   // gather CSS
   getCSS(CODEMIRROR_CSS);
-  storedTheme = localStorage[NAMESPACE + '_THEME'];
+  storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
   if (storedTheme) {
     getCSS(storedTheme);
-  } else {
-    localStorage[NAMESPACE + '_THEME'] = DEFAULT_CODEMIRROR_THEME;
-    getCSS(DEFAULT_CODEMIRROR_THEME);
   }
 
   window.Showdown = Showdown;
