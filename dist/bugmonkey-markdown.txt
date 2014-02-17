@@ -49,7 +49,8 @@ js:
       CODEMIRROR_URL_BASE + '/addon/mode/overlay.min.js',
       CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.js',
       CODEMIRROR_URL_BASE + '/addon/search/search.min.js',
-      CODEMIRROR_URL_BASE + '/addon/search/searchcursor.min.js'
+      CODEMIRROR_URL_BASE + '/addon/search/searchcursor.min.js',
+      CODEMIRROR_URL_BASE + '/addon/comment/comment.js'
     ],
 
   // default codemirror css
@@ -121,7 +122,11 @@ js:
             mode: 'gfm', // Github Flavored Markdown
             lineWrapping: true,
             theme: localStorage[NAMESPACE + '.THEME_NAME'] || 'default',
-            tabindex: $textarea.attr('tabindex')
+            tabindex: $textarea.attr('tabindex'),
+            extraKeys: {
+              'Cmd-/': 'toggleComment',
+              'Ctrl-/': 'toggleComment'
+            }
           });
 
           // Stops propagation if you press "`", I think.  The FB default code snippet key is "`" and "`" is used often in Markdown.
