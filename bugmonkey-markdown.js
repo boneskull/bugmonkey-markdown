@@ -42,13 +42,19 @@
       CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.js',
       CODEMIRROR_URL_BASE + '/addon/search/search.min.js',
       CODEMIRROR_URL_BASE + '/addon/search/searchcursor.min.js',
-      CODEMIRROR_URL_BASE + '/addon/comment/comment.js'
+      CODEMIRROR_URL_BASE + '/addon/comment/comment.min.js',
+      CODEMIRROR_URL_BASE + '/addon/fold/foldcode.min.js',
+      CODEMIRROR_URL_BASE + '/addon/fold/foldgutter.min.js',
+      CODEMIRROR_URL_BASE + '/addon/fold/xml-fold.min.js',
+      CODEMIRROR_URL_BASE + '/addon/fold/brace-fold.min.js',
+      CODEMIRROR_URL_BASE + '/addon/fold/comment-fold.min.js'
     ],
 
   // default codemirror css
     CSS = [
       CODEMIRROR_URL_BASE + '/codemirror.min.css',
-      CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.css'
+      CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.css',
+      CODEMIRROR_URL_BASE + '/addon/fold/foldgutter.css'
     ],
 
     NAMESPACE = 'BugMonkey.Markdown',
@@ -117,8 +123,15 @@
             tabindex: $textarea.attr('tabindex'),
             extraKeys: {
               'Cmd-/': 'toggleComment',
-              'Ctrl-/': 'toggleComment'
-            }
+              'Ctrl-/': 'toggleComment',
+              'Ctrl-Q': function (cm) {
+                cm.foldCode(cm.getCursor());
+              }
+            },
+            lineNumbers: false,
+            foldGutter: true,
+            gutters: ["CodeMirror-foldgutter"]
+
           });
 
           // Stops propagation if you press "`", I think.  The FB default code snippet key is "`" and "`" is used often in Markdown.
@@ -299,7 +312,7 @@
         });
 
       // gather CSS
-      CSS.forEach(function(url){
+      CSS.forEach(function (url) {
         getCSS(url);
       });
       storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
