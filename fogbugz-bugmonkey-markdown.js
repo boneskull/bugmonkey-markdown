@@ -11,11 +11,16 @@
 
   var CODEMIRROR_URL_BASE = '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.21.0/',
 
-    /**
-     * URL of CodeMirror script
-     * @type {string}
-     */
-      CODEMIRROR_SCRIPT = CODEMIRROR_URL_BASE + 'codemirror.min.js',
+    REQUIREMENTS = [
+      CODEMIRROR_URL_BASE + 'codemirror.min.js',
+      '//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js',
+      '//cdn.jsdelivr.net/jquery.preempt/0.3.2/jquery.preempt.min.js',
+      '//badwing.com/content/MutationObserver.min.js'
+    ],
+
+    SHOWDOWN_ADDONS = [
+      '//badwing.com/content/fogbugz-showdown.min.js'
+    ],
 
     /**
      * @description List of other necessary script URLs.
@@ -24,7 +29,7 @@
      *
      * @type {string[]}
      */
-      SCRIPTS = [
+      CODEMIRROR_ADDONS = [
       CODEMIRROR_URL_BASE + '/mode/markdown/markdown.min.js',
       CODEMIRROR_URL_BASE + '/mode/gfm/gfm.min.js',
       CODEMIRROR_URL_BASE + '/addon/mode/overlay.min.js',
@@ -54,7 +59,7 @@
     SEL_CODEMIRROR = '.CodeMirror',
 
     SEL_ACTIONBTNS = '.actionButton2[value!="Cancel"]',
-//SEL_ACTIONBTNS = '#Button_OKEdit',
+
     CLS_RTE = 'richtextarea',
 
     CLS_BUGEVENT = 'bugevent',
@@ -240,45 +245,53 @@
 
     },
 
-    /**
-     * @description Retrieves CSS at URL <code>href</code> and adds to the <head>
-     * @param {string} href URL of CSS to get
-     */
-      getCSS = function getCSS(href) {
-      $('<link/>', {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href: href
-      }).appendTo('head');
+    bootstrap = function bootstrap() {
+
+      /**
+       * @description Retrieves CSS at URL <code>href</code> and adds to the <head>
+       * @param {string} href URL of CSS to get
+       */
+      var getCSS = function getCSS(href) {
+          $('<link/>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: href
+          }).appendTo('head');
+        },
+
+        getScripts = function getScripts(scripts) {
+          return $.when.apply($, scripts.map(function getScript(script) {
+            return $.getScript(script);
+          }));
+        };
+
+      console.info('Bugmonkey Markdown: fetching resources');
+
+      getScripts(REQUIREMENTS)
+        .then(function () {
+          window.Showdown = Showdown;
+          return getScripts(CODEMIRROR_ADDONS.concat(SHOWDOWN_ADDONS));
+        })
+        .then(function setupWhenReady() {
+          // only once we have all our resources are we ready
+          console.info('BugMonkey Markdown: fit to get my party on');
+
+          // wait for document ready, whatever that is.
+          $(setup);
+        })
+        .fail(function fatal(err) {
+          console.error(err);
+        });
+
+      // gather CSS
+      getCSS(CODEMIRROR_CSS);
+      storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
+      if (storedTheme) {
+        getCSS(storedTheme);
+      }
     };
 
-  // gather CSS
-  getCSS(CODEMIRROR_CSS);
-  storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
-  if (storedTheme) {
-    getCSS(storedTheme);
-  }
-
-  window.Showdown = Showdown;
-
-  // we need codemirror.js first, and then secondary scripts, in any order.
-  $.getScript(CODEMIRROR_SCRIPT)
-    .then(function getAllScripts() {
-      return $.when.apply($, SCRIPTS.map(function getAScript(script) {
-        return $.getScript(script);
-      }));
-    })
-    .then(function setupWhenReady() {
-      // only once we have all our resources are we ready
-      console.info('BugMonkey Markdown: fit to get my party on');
-
-      // wait for document ready, whatever that is.
-      $(setup);
-    })
-    .fail(function fatal(err) {
-      console.error(err);
-    });
-
+  bootstrap();
 
 })(jQuery, window);
 

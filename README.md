@@ -42,15 +42,14 @@ Paste `dist/bugmonkey-markdown.txt` into the editor instead.
 You might want to do this if you hate the CSS I picked, or want some other fancy CodeMirror feature.
 
 1.  Execute `npm install`
-2.  Execute `bower install`
-3.  Make edits to any/all of the following:
+2.  Make edits to any/all of the following:
   1.  `fogbugz-bugmonkey-markdown.js`
   2.  `fogbugz-showdown.js`
   3.  `fogbugz-bugmonkey-markdown.css`
   4.  `header.txt`
-4.  Execute `grunt` to output `bugmonkey-markdown.txt` and `bugmonkey-markdown.min.txt` into the `dist/` directory.
-5.  Alternatively, execute `grunt watch` before you start fiddling with files and the `dist/*.txt` files will be created automatically.
-6.  Paste the contents of one of the files in the `dist/` directory back into FogBugz.  Save, refresh, rinse, repeat.
+3.  Execute `grunt` to output `bugmonkey-markdown.txt` and `bugmonkey-markdown.min.txt` into the `dist/` directory.
+4.  Alternatively, execute `grunt watch` before you start fiddling with files and the `dist/*.txt` files will be created automatically.
+5.  Paste the contents of one of the files in the `dist/` directory back into FogBugz.  Save, refresh, rinse, repeat.
 
 ### Dependencies
 

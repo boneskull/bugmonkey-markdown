@@ -11,14 +11,7 @@ module.exports = function (grunt) {
     uglify: {
       main: {
         files: {
-          'build/MutationObserver.min.js': ['MutationObserver.js'],
-          'build/fogbugz-bugmonkey-markdown.min.js': ['<%= pkg.main %>'],
-          'build/showdown.min.js': [
-            'bower_components/showdown/src/showdown.js'
-          ],
-          'build/fogbugz-showdown.min.js': [
-            'fogbugz-showdown.js'
-          ]
+          'build/fogbugz-bugmonkey-markdown.min.js': ['<%= pkg.main %>']
         }
       }
     },
@@ -28,9 +21,7 @@ module.exports = function (grunt) {
       },
       all: {
         files: [
-          '<%=pkg.main%>', 'fogbugz-bugmonkey-markdown.css', 'Gruntfile.js',
-          'fogbugz-showdown.js', 'MutationObserver.js',
-          'header.txt', 'bower_components/**/*'
+          '<%=pkg.main%>', 'fogbugz-bugmonkey-markdown.css', 'Gruntfile.js', 'header.txt'
         ],
         tasks: ['default']
       }
@@ -68,13 +59,7 @@ module.exports = function (grunt) {
         dest: 'dist/bugmonkey-markdown.min.txt',
         src: [
           'header.txt',
-          'build/MutationObserver.min.js',
-          'bower_components/jquery.preempt/jquery.preempt.min.js',
-          'build/showdown.min.js',
           'build/fogbugz-bugmonkey-markdown.min.js',
-          // this must be loaded after our main script because we have to
-          // stuff Showdown into the window object.
-          'build/fogbugz-showdown.min.js',
           'build/fogbugz-bugmonkey-markdown.min.css'
         ]
       },
@@ -82,11 +67,7 @@ module.exports = function (grunt) {
         dest: 'dist/bugmonkey-markdown.txt',
         src: [
           'header.txt',
-          'MutationObserver.js',
-          'bower_components/jquery.preempt/jquery.preempt.js',
-          'bower_components/showdown/src/showdown.js',
           'fogbugz-bugmonkey-markdown.js',
-          'fogbugz-showdown.js',
           'fogbugz-bugmonkey-markdown.css'
         ]
       }
@@ -103,7 +84,7 @@ module.exports = function (grunt) {
 
     bump: {
       options: {
-        files: ['package.json', 'bower.json'],
+        files: ['package.json'],
         updateConfigs: ['pkg'],
         commit: true,
         commitMessage: 'Release v%VERSION%',
