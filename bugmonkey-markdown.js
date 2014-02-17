@@ -80,6 +80,7 @@
             },
             lineNumbers: false,
             foldGutter: true,
+            viewportMargin: Infinity,
             gutters: ["CodeMirror-foldgutter"]
 
           });

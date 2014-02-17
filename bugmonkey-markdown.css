@@ -1,4 +1,14 @@
 .CodeMirror {
     border: 1px solid #4a5b79;
-    height: 198px !important;
+    height: auto;
+    min-height: 148px;
+}
+
+.CodeMirror-gutters {
+    min-height: 148px;
+}
+
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
 }

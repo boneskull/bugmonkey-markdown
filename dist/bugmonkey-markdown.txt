@@ -15138,6 +15138,7 @@ if (typeof define === 'function' && define.amd) {
             },
             lineNumbers: false,
             foldGutter: true,
+            viewportMargin: Infinity,
             gutters: ["CodeMirror-foldgutter"]
 
           });
@@ -15633,5 +15634,15 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .CodeMirror {
     border: 1px solid #4a5b79;
-    height: 198px !important;
+    height: auto;
+    min-height: 148px;
+}
+
+.CodeMirror-gutters {
+    min-height: 148px;
+}
+
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
 }
