@@ -68,7 +68,7 @@ IE9 and IE10 support courtesy [Mutation Observers Polyfill](http://goo.gl/yRyxCK
 
 ## License
 
-MIT, with portions Copyright (c) 2013 The Polymer Authors. All rights reserved.
+MIT
 
 ## Author
 [Christopher Hiller](http://boneskull.github.io)
