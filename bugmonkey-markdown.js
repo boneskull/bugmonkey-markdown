@@ -9,56 +9,7 @@
 (function (jQuery, window) {
   'use strict';
 
-  var CODEMIRROR_URL_BASE = '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.21.0/',
-
-    REQUIREMENTS = [
-      CODEMIRROR_URL_BASE + 'codemirror.min.js',
-      '//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js',
-      '//cdn.jsdelivr.net/jquery.preempt/0.3.2/jquery.preempt.min.js',
-      '//badwing.com/content/MutationObserver.min.js'
-    ],
-
-    SHOWDOWN_ADDONS = [
-      '//badwing.com/content/fogbugz-showdown.min.js'
-    ],
-
-    /**
-     * @description List of other necessary script URLs.
-     *
-     * GFM needs Markdown and Overlay to do anything.  XML, Javascript, Python and Shell all enable embedded syntax highlighting.
-     *
-     * @type {string[]}
-     */
-      CODEMIRROR_ADDONS = [
-      // modes
-      CODEMIRROR_URL_BASE + '/mode/markdown/markdown.min.js',
-      CODEMIRROR_URL_BASE + '/mode/gfm/gfm.min.js',
-      CODEMIRROR_URL_BASE + '/mode/xml/xml.min.js',
-      CODEMIRROR_URL_BASE + '/mode/javascript/javascript.min.js',
-      CODEMIRROR_URL_BASE + '/mode/python/python.min.js',
-      CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js',
-      // addons
-      CODEMIRROR_URL_BASE + '/addon/mode/overlay.min.js',
-      CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.js',
-      CODEMIRROR_URL_BASE + '/addon/search/search.min.js',
-      CODEMIRROR_URL_BASE + '/addon/search/searchcursor.min.js',
-      CODEMIRROR_URL_BASE + '/addon/comment/comment.min.js',
-      CODEMIRROR_URL_BASE + '/addon/fold/foldcode.min.js',
-      CODEMIRROR_URL_BASE + '/addon/fold/foldgutter.min.js',
-      CODEMIRROR_URL_BASE + '/addon/fold/xml-fold.min.js',
-      CODEMIRROR_URL_BASE + '/addon/fold/brace-fold.min.js',
-      CODEMIRROR_URL_BASE + '/addon/fold/comment-fold.min.js',
-      CODEMIRROR_URL_BASE + '/keymap/vim.min.js'
-    ],
-
-  // default codemirror css
-    CSS = [
-      CODEMIRROR_URL_BASE + '/codemirror.min.css',
-      CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.css',
-      CODEMIRROR_URL_BASE + '/addon/fold/foldgutter.css'
-    ],
-
-    NAMESPACE = 'BugMonkey.Markdown',
+  var NAMESPACE = 'BugMonkey.Markdown',
 
     ID_TEXTAREA = 'sEventEdit',
 
@@ -95,8 +46,6 @@
     $sFormat = $('<input name="sEvent_sFormat" type="hidden" value="html"/>'),
 
     textareaObserver,
-
-    storedTheme,
 
     /**
      * @description When the page is ready, this function is run.  Initializes a token if appropriate, and watches the DOM for the "plain text" link/btn
@@ -285,41 +234,15 @@
             href: href
           }).appendTo('head');
         },
+        storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
 
-        getScripts = function getScripts(scripts) {
-          return $.when.apply($, scripts.map(function getScript(script) {
-            return $.getScript(script);
-          }));
-        };
-
-      console.info('Bugmonkey Markdown: fetching resources');
-
-      getScripts(REQUIREMENTS)
-        .then(function () {
-
-          // TODO: remove this line when http://github.com/coreyti/showdown/issues/86 is resolved
-          window.Showdown = Showdown;
-          return getScripts(CODEMIRROR_ADDONS.concat(SHOWDOWN_ADDONS));
-        })
-        .then(function setupWhenReady() {
-          // only once we have all our resources are we ready
-          console.info('BugMonkey Markdown: fit to get my party on');
-
-          // wait for document ready, whatever that is.
-          $(setup);
-        })
-        .fail(function fatal(err) {
-          console.error(err);
-        });
-
-      // gather CSS
-      CSS.forEach(function (url) {
-        getCSS(url);
-      });
-      storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
       if (storedTheme) {
         getCSS(storedTheme);
       }
+
+      console.info("BugMonkey Markdown: I'm fit to get my party on");
+
+      $(setup);
     };
 
   bootstrap();

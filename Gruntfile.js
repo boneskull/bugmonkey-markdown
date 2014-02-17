@@ -4,6 +4,11 @@ var path = require('path');
 module.exports = function (grunt) {
   'use strict';
 
+  var prereqs = grunt.file.readJSON('prereqs.json'),
+    basenames = prereqs.js.map(function (url) {
+      return path.join('build', 'prereqs', path.basename(url));
+    });
+
   // Project configuration.
   grunt.initConfig({
     // Metadata.
@@ -11,7 +16,9 @@ module.exports = function (grunt) {
     uglify: {
       main: {
         files: {
-          'build/bugmonkey-markdown.min.js': ['<%= pkg.main %>']
+          'build/bugmonkey-markdown.min.js': basenames.concat([
+            '<%= pkg.main %>'
+          ])
         }
       }
     },
@@ -21,62 +28,17 @@ module.exports = function (grunt) {
       },
       all: {
         files: [
-          '<%=pkg.main%>', 'bugmonkey-markdown.css', 'Gruntfile.js', 'header.txt'
+          '<%=pkg.main%>', 'bugmonkey-markdown.css', 'Gruntfile.js',
+          'header.txt'
         ],
         tasks: ['default']
-      }
-    },
-    filetransform: {
-      options: {
-        reduce: function reduce(results) {
-          var jsDone = false, cssDone = false;
-          return results.map(function concatForBugMonkey(result) {
-            var contents = result.contents;
-            switch (path.extname(result.filepath)) {
-              case '.txt':
-                return contents;
-              case '.js':
-                if (jsDone) {
-                  return contents;
-                }
-                jsDone = true;
-                return '\n\njs:\n\n' + contents;
-              case '.css':
-                if (cssDone) {
-                  return contents;
-                }
-                cssDone = true;
-                return '\n\ncss:\n\n' + contents;
-              default:
-                throw new Error('unrecognized extension: "' +
-                  path.extname(result.filepath) + '"');
-            }
-          }).join('');
-
-        }
-      },
-      production: {
-        dest: 'dist/bugmonkey-markdown.min.txt',
-        src: [
-          'header.txt',
-          'build/bugmonkey-markdown.min.js',
-          'build/bugmonkey-markdown.min.css'
-        ]
-      },
-      development: {
-        dest: 'dist/bugmonkey-markdown.txt',
-        src: [
-          'header.txt',
-          'bugmonkey-markdown.js',
-          'bugmonkey-markdown.css'
-        ]
       }
     },
     cssmin: {
       main: {
         files: {
           'build/bugmonkey-markdown.min.css': [
-            'bugmonkey-markdown.css'
+            'build/prereqs/*.css', 'bugmonkey-markdown.css'
           ]
         }
       }
@@ -95,17 +57,72 @@ module.exports = function (grunt) {
         push: true,
         pushTo: 'origin'
       }
+    },
+    'curl-dir': {
+      'build/prereqs': prereqs.js.concat(prereqs.css)
+    },
+    clean: ['build'],
+    concat: {
+      phase1: {
+        files: {
+          'build/phase1.min.txt': 'header.txt',
+          'build/phase1.txt': 'header.txt'
+        }
+      },
+      phase2: {
+        options: {
+          banner: '\n\njs:\n\n'
+        },
+        files: {
+          'build/phase2.min.txt': [
+            'build/bugmonkey-markdown.min.js'
+          ],
+          'build/phase2.txt': basenames.concat([
+            'bugmonkey-markdown.js'
+          ])
+        }
+      },
+      phase3: {
+        options: {
+          banner: '\n\ncss:\n\n'
+        },
+        files: {
+          'build/phase3.min.txt': [
+            'build/bugmonkey-markdown.min.css'
+          ],
+          'build/phase3.txt': [
+            'build/prereqs/*.css',
+            'bugmonkey-markdown.css'
+          ]
+        }
+      },
+      phase4: {
+        files: {
+          'dist/bugmonkey-markdown.min.txt': [
+            'build/phase*.min.txt'
+          ],
+          'dist/bugmonkey-markdown.txt': [
+            'build/phase?.txt'
+          ]
+        }
+      }
     }
+
   });
 
-// These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-filetransform');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-bump');
+  require('matchdep').filterDev(
+    ['grunt-*']).forEach(grunt.loadNpmTasks);
 
 // Default task.
-  grunt.registerTask('default', ['uglify', 'cssmin', 'filetransform']);
+  grunt.registerTask('default', [
+    'clean',
+    'curl-dir',
+    'uglify',
+    'cssmin',
+    'concat:phase1',
+    'concat:phase2',
+    'concat:phase3',
+    'concat:phase4'
+  ]);
 
 };

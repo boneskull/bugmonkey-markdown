@@ -61,11 +61,6 @@ BugMonkey Markdown leverages:
 
 IE9 and IE10 support courtesy [Mutation Observers Polyfill](http://goo.gl/yRyxCK) from the [Dart](http://dart-lang.org) project.
 
-### Dev Dependencies
-
-* [Grunt](http://gruntjs.org) + various contrib tasks
-* [grunt-filetransform](https://github.com/dfernandez79/grunt-filetransform)
-
 ## License
 
 MIT
