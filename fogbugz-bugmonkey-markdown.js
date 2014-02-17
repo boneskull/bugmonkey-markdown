@@ -269,6 +269,8 @@
 
       getScripts(REQUIREMENTS)
         .then(function () {
+
+          // TODO: remove this line when http://github.com/coreyti/showdown/issues/86 is resolved
           window.Showdown = Showdown;
           return getScripts(CODEMIRROR_ADDONS.concat(SHOWDOWN_ADDONS));
         })
