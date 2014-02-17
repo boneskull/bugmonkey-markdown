@@ -43,9 +43,9 @@ You might want to do this if you hate the CSS I picked, or want some other fancy
 
 1.  Execute `npm install`
 2.  Make edits to any/all of the following:
-  1.  `fogbugz-bugmonkey-markdown.js`
-  2.  `fogbugz-bugmonkey-markdown.css`
-  3.  `header.txt`
+  1.  `./bugmonkey-markdown.js`
+  2.  `./bugmonkey-markdown.css`
+  3.  `./header.txt`
 3.  Execute `grunt` to output `bugmonkey-markdown.txt` and `bugmonkey-markdown.min.txt` into the `dist/` directory.
 4.  Alternatively, execute `grunt watch` before you start fiddling with files and the `dist/*.txt` files will be created automatically.
 5.  Paste the contents of one of the files in the `dist/` directory back into FogBugz.  Save, refresh, rinse, repeat.

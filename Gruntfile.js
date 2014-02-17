@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     uglify: {
       main: {
         files: {
-          'build/fogbugz-bugmonkey-markdown.min.js': ['<%= pkg.main %>']
+          'build/bugmonkey-markdown.min.js': ['<%= pkg.main %>']
         }
       }
     },
@@ -21,7 +21,7 @@ module.exports = function (grunt) {
       },
       all: {
         files: [
-          '<%=pkg.main%>', 'fogbugz-bugmonkey-markdown.css', 'Gruntfile.js', 'header.txt'
+          '<%=pkg.main%>', 'bugmonkey-markdown.css', 'Gruntfile.js', 'header.txt'
         ],
         tasks: ['default']
       }
@@ -59,24 +59,24 @@ module.exports = function (grunt) {
         dest: 'dist/bugmonkey-markdown.min.txt',
         src: [
           'header.txt',
-          'build/fogbugz-bugmonkey-markdown.min.js',
-          'build/fogbugz-bugmonkey-markdown.min.css'
+          'build/bugmonkey-markdown.min.js',
+          'build/bugmonkey-markdown.min.css'
         ]
       },
       development: {
         dest: 'dist/bugmonkey-markdown.txt',
         src: [
           'header.txt',
-          'fogbugz-bugmonkey-markdown.js',
-          'fogbugz-bugmonkey-markdown.css'
+          'bugmonkey-markdown.js',
+          'bugmonkey-markdown.css'
         ]
       }
     },
     cssmin: {
       main: {
         files: {
-          'build/fogbugz-bugmonkey-markdown.min.css': [
-            'fogbugz-bugmonkey-markdown.css'
+          'build/bugmonkey-markdown.min.css': [
+            'bugmonkey-markdown.css'
           ]
         }
       }

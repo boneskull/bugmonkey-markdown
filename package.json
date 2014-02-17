@@ -1,11 +1,11 @@
 {
-  "name": "fogbugz-bugmonkey-markdown",
-  "main": "fogbugz-bugmonkey-markdown.js",
+  "name": "bugmonkey-markdown",
+  "main": "bugmonkey-markdown.js",
   "private": true,
   "description": "BugMonkey customization for FogBugz which allows for Markdown in editor.",
   "version": "1.1.2",
-  "homepage": "http://boneskull.github.io/fb-bugmonkey-markdown",
-  "repository": "git://github.com/boneskull/fb-bugmonkey-markdown.git",
+  "homepage": "http://boneskull.github.io/bugmonkey-markdown",
+  "repository": "git://github.com/boneskull/bugmonkey-markdown.git",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.3.2",
