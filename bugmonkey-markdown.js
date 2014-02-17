@@ -30,17 +30,25 @@
      * @type {string[]}
      */
       CODEMIRROR_ADDONS = [
+      // modes
       CODEMIRROR_URL_BASE + '/mode/markdown/markdown.min.js',
       CODEMIRROR_URL_BASE + '/mode/gfm/gfm.min.js',
-      CODEMIRROR_URL_BASE + '/addon/mode/overlay.min.js',
       CODEMIRROR_URL_BASE + '/mode/xml/xml.min.js',
       CODEMIRROR_URL_BASE + '/mode/javascript/javascript.min.js',
       CODEMIRROR_URL_BASE + '/mode/python/python.min.js',
-      CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js'
+      CODEMIRROR_URL_BASE + '/mode/shell/shell.min.js',
+      // addons
+      CODEMIRROR_URL_BASE + '/addon/mode/overlay.min.js',
+      CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.js',
+      CODEMIRROR_URL_BASE + '/addon/search/search.min.js',
+      CODEMIRROR_URL_BASE + '/addon/search/searchcursor.min.js'
     ],
 
   // default codemirror css
-    CODEMIRROR_CSS = CODEMIRROR_URL_BASE + '/codemirror.min.css',
+    CSS = [
+      CODEMIRROR_URL_BASE + '/codemirror.min.css',
+      CODEMIRROR_URL_BASE + '/addon/dialog/dialog.min.css'
+    ],
 
     NAMESPACE = 'BugMonkey.Markdown',
 
@@ -286,7 +294,9 @@
         });
 
       // gather CSS
-      getCSS(CODEMIRROR_CSS);
+      CSS.forEach(function(url){
+        getCSS(url);
+      });
       storedTheme = localStorage[NAMESPACE + '.THEME_URL'];
       if (storedTheme) {
         getCSS(storedTheme);
