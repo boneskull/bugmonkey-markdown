@@ -47,7 +47,8 @@
       CODEMIRROR_URL_BASE + '/addon/fold/foldgutter.min.js',
       CODEMIRROR_URL_BASE + '/addon/fold/xml-fold.min.js',
       CODEMIRROR_URL_BASE + '/addon/fold/brace-fold.min.js',
-      CODEMIRROR_URL_BASE + '/addon/fold/comment-fold.min.js'
+      CODEMIRROR_URL_BASE + '/addon/fold/comment-fold.min.js',
+      CODEMIRROR_URL_BASE + '/keymap/vim.min.js'
     ],
 
   // default codemirror css
