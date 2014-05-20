@@ -4,10 +4,7 @@ var path = require('path');
 module.exports = function (grunt) {
   'use strict';
 
-  var prereqs = grunt.file.readJSON('prereqs.json'),
-    basenames = prereqs.js.map(function (url) {
-      return path.join('build', 'prereqs', path.basename(url));
-    });
+  var prereqs = grunt.file.readJSON('prereqs.json');
 
   // Project configuration.
   grunt.initConfig({
@@ -16,9 +13,11 @@ module.exports = function (grunt) {
     uglify: {
       main: {
         files: {
-          'build/bugmonkey-markdown.min.js': basenames.concat([
-            '<%= pkg.main %>'
-          ])
+          'build/bugmonkey-markdown.min.js': prereqs.js.map(function (file) {
+            return 'build/bower_components/' + file;
+          }).concat([
+              '<%= pkg.main %>'
+            ])
         }
       }
     },
@@ -37,9 +36,9 @@ module.exports = function (grunt) {
     cssmin: {
       main: {
         files: {
-          'build/bugmonkey-markdown.min.css': [
-            'build/prereqs/*.css', 'bugmonkey-markdown.css'
-          ]
+          'build/bugmonkey-markdown.min.css': prereqs.css.map(function (file) {
+            return 'build/bower_components/' + file;
+          }).concat(['bugmonkey-markdown.css'])
         }
       }
     },
@@ -58,9 +57,6 @@ module.exports = function (grunt) {
         pushTo: 'origin'
       }
     },
-    'curl-dir': {
-      'build/prereqs': prereqs.js.concat(prereqs.css)
-    },
     clean: ['build'],
     concat: {
       phase1: {
@@ -77,9 +73,11 @@ module.exports = function (grunt) {
           'build/phase2.min.txt': [
             'build/bugmonkey-markdown.min.js'
           ],
-          'build/phase2.txt': basenames.concat([
-            'bugmonkey-markdown.js'
-          ])
+          'build/phase2.txt': prereqs.js.map(function (file) {
+            return 'build/bower_components/' + file;
+          }).concat([
+              'bugmonkey-markdown.js'
+            ])
         }
       },
       phase3: {
@@ -90,10 +88,11 @@ module.exports = function (grunt) {
           'build/phase3.min.txt': [
             'build/bugmonkey-markdown.min.css'
           ],
-          'build/phase3.txt': [
-            'build/prereqs/*.css',
-            'bugmonkey-markdown.css'
-          ]
+          'build/phase3.txt': prereqs.css.map(function (file) {
+            return 'build/bower_components/' + file;
+          }).concat([
+              'bugmonkey-markdown.css'
+            ])
         }
       },
       phase4: {
@@ -106,6 +105,14 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    bower: {
+      install: {},
+      options: {
+        bowerOptions: {
+          production: false
+        }
+      }
     }
 
   });
@@ -116,13 +123,10 @@ module.exports = function (grunt) {
 // Default task.
   grunt.registerTask('default', [
     'clean',
-    'curl-dir',
+    'bower',
     'uglify',
     'cssmin',
-    'concat:phase1',
-    'concat:phase2',
-    'concat:phase3',
-    'concat:phase4'
+    'concat'
   ]);
 
 };

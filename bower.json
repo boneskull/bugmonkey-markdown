@@ -1,0 +1,28 @@
+{
+  "name": "bugmonkey-markdown",
+  "main": "bugmonkey-markdown.js",
+  "version": "1.1.4",
+  "homepage": "http://boneskull.github.io/bugmonkey-markdown",
+  "authors": [
+    "Christopher Hiller <chiller@badwing.com>"
+  ],
+  "description": "BugMonkey customization for FogBugz which allows for Markdown in case editor",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery-mutation-summary": "git://github.com/joelpurra/jquery-mutation-summary.git",
+    "codemirror": "~3.21.0",
+    "showdown": "git://github.com/boneskull/showdown#showdown-86",
+    "jquery.preempt": "~0.3.3",
+    "MutationObserver.js": "git://github.com/megawac/MutationObserver.js#~0.2.1",
+    "showdown-fogbugz": "~1.0.0",
+    "mutation-summary": "https://code.google.com/p/mutation-summary.git"
+  }
+}
